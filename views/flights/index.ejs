@@ -1,0 +1,34 @@
+<%- include('../partials/header') %>
+<a href="/flights/sortasc">
+    <button>Date Ascending</button>
+</a>
+<a href="/flights/sortdsc">
+    <button>Date Descending</button>
+</a>
+<table>
+  <thead>
+    <tr>
+      <th>Airline</th>
+      <th>Airport Year</th>
+      <th>Flight No.</th>
+      <th>Departs</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% if (flights.length) { %>
+  <%var todaysDate = new Date()%>
+    <% flights.forEach(function(f){ %>
+    <tr class="<%= todaysDate < f.departs ? '' : 'red' %>">
+        <td><%= f.airline %></td>
+        <td><%= f.airport %></td>
+        <td><%= f.flightNo %></td>
+        <td><%= f.departs %></td>
+        
+      </tr>
+    </tbody>
+    <% }) %> 
+</table>   
+<% } else { %>
+    <h3>No Flights Yet.... Try Adding One</h3>
+    <% } %>
+<%- include('../partials/footer') %>
