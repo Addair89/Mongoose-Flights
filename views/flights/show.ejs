@@ -1,11 +1,13 @@
 <%- include('../partials/header') %>
+<h1>Depatures</h1>
 <table>
 <thead>
     <tr>
       <th>Airline</th>
-      <th>Airport Year</th>
+      <th>Airport</th>
       <th>Flight No.</th>
       <th>Departs</th>
+      
     </tr>
   </thead>
   <tbody>
@@ -13,8 +15,61 @@
         <td><%= flight.airline %></td>
         <td><%= flight.airport %></td>
         <td><%= flight.flightNo %></td>
-        <td><%= flight.departs %></td>
+        <td><%= flight.departs.toLocaleString() %></td>
       </tr>
     </tbody>
 </table>
+  <h1>Tickets</h1>
+    <div class="tickets-conatiner">
+      <% ticket?.forEach(function(t) {%>
+        <div class="ticket">
+          <p>Seat: <%= t.seat %> - $<%= t.price %></p> 
+          <form action="/tickets/<%- t._id %>/tickets/delete/?_method=DELETE" method="POST">
+            <button>X</button>
+          </form>
+        </div>
+        <% }) %>
+      </div>
+    
+    <a href='/flights/<%- flight._id %>/tickets/new'><button>BUY TICKET</button></a>
+  <h1>Arrivals</h1>
+  <a href="/destinations/sortasc/<%= flight._id %>">
+    <button>Date Ascending</button>
+  </a>
+  <a href="/destinations/sortdsc/<%= flight._id %>">
+    <button>Date Descending</button>
+  </a>
+  <table>
+    <thead>
+      <th>Arrival Time</th>
+      <th>Arrival Airport</th>
+    </thead>
+    <tbody>
+      <% if (flight.destinations.length) { %>
+      <% flight.destinations.forEach(function(f) { %>
+    <tr>
+      <td><%= f.arrival.toLocaleString()%></td>
+      <td><%= f.airport%></td>
+      <% }) %>
+      <% } else { %>
+      <td>N/A</td>
+      <td>N/A</td>
+      <% } %>
+    </tr>
+  </tbody>
+</table>
+<h2>Add a destination</h2>
+<form action="/destinations/<%= flight.id %>?_method=PUT" method="POST"> 
+  <label for="">Arrival Time</label>
+  <input type="datetime-local" name="arrival" value="">
+  <label for="">Airport</label>
+  <select name="airport">
+        <option value="AUS">AUS</option>
+        <option value="DFW">DFW</option>
+        <option value="DEN">DEN</option>
+        <option value="LAX">LAX</option>
+        <option value="SAN">SAN</option>
+  </select>
+  <button>Add Info</button>
+</form>
 <%- include('../partials/footer') %>

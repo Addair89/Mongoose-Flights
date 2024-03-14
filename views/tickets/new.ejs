@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+<p>Flight NO: <%- flight.flightNo %></p>
+<p>Departing From: <%- flight.airport %></p>
+<p>Date: <%- flight.departs.toLocaleString() %></p>
+<form action="/tickets/flights/<%- flight._id %>/ticket" method="POST">
+    <%= flight %>
+    <label for="">Seat: <small>(A-F then 1-9)</small></label>
+    <input placeholder="A-F1-9" name="seat" required pattern="[A-F][1-9]\d?">
+    <label for="">Price:</label>
+    <select name="price" id="">
+        <option value="50">Storage - $50</option>
+        <option value="150">Cabin - $150</option>
+        <option value="15000">First Class - $15000</option>
+    </select>
+    <!-- <input type="text" name="flight" value="<%- flight._id %>" disabled> -->
+    <button>Buy</button>
+</form>
+<%- include('../partials/footer') %>
